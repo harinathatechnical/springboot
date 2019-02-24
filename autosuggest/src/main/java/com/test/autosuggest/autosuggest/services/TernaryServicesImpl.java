@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 
 
 @Component
@@ -21,7 +22,8 @@ public class TernaryServicesImpl implements TernaryServices,InitializingBean {
 
     public void afterPropertiesSet() throws Exception {
         Resource resource  = new ClassPathResource("/static/Sample.txt");
-        try (BufferedReader br = new BufferedReader(new FileReader(resource.getFile()))) {
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream(), "UTF-8"))){
             String line;
             while ((line = br.readLine()) != null) {
                 root = insert(root, line.toLowerCase().toCharArray(), 0);
